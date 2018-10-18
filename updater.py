@@ -55,9 +55,7 @@ class Updater(Thread):
     def run(self):
         while self.do_run:
             ip = self.get_ip()
-            print ip
             if self.ip is not ip:
-                print self.ip, "!=", ip
                 self.ip = ip
                 self.update(self.ip, self.host, self.domain, self.password)
             sleep(self.sleep_time)
