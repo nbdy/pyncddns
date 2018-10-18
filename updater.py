@@ -54,6 +54,7 @@ class Updater(Thread):
 
         for _ in [self.password, self.domain, self.host, self.sleep_time]:
             if _ is None:
+                print "something was not filled"
                 self.do_run = False
 
     def run(self):
