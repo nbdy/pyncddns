@@ -39,15 +39,16 @@ class Updater(Thread):
     sleep_time = None
     ip = None
 
-    def __init__(self, domain, host, password, ip=None):
+    def __init__(self, domain, host, password, ip=None, sleep_time=60*60):
         Thread.__init__(self)
         self.do_run = True
         self.domain = domain
         self.host = host
         self.password = password
         self.ip = ip
+        self.sleep_time = sleep_time
 
-        for _ in [self.domain, self.host, self.password, self.ip]:
+        for _ in [self.domain, self.host, self.password, self.ip, self.sleep_time]:
             if _ is None:
                 self.do_run = False
 
@@ -86,8 +87,8 @@ class Updater(Thread):
 
 
 if __name__ == '__main__':
-    c = kwargs=parse_args()
-    u = Updater()
+    c = parse_args()
+    u = Updater(c["domain"], c["host"], c["password"], c["ip"], c["sleep_time"])
     try:
         u.start()
     except KeyboardInterrupt:
