@@ -39,22 +39,16 @@ class Updater(Thread):
     sleep_time = None
     ip = None
 
-    def __init__(self, **kwargs):
+    def __init__(self, domain, host, password, ip=None):
         Thread.__init__(self)
         self.do_run = True
-        _ = kwargs.keys()
-        if "password" in _:
-            self.password = kwargs.get("password")
-        elif "domain" in _:
-            self.domain = kwargs.get("domain")
-        elif "host" in _:
-            self.host = kwargs.get("host")
-        elif "sleep_time" in _:
-            self.sleep_time = kwargs.get("sleep_time")
+        self.domain = domain
+        self.host = host
+        self.password = password
+        self.ip = ip
 
-        for _ in [self.password, self.domain, self.host, self.sleep_time]:
+        for _ in [self.domain, self.host, self.password, self.ip]:
             if _ is None:
-                print "something was not filled"
                 self.do_run = False
 
     def run(self):
@@ -92,7 +86,8 @@ class Updater(Thread):
 
 
 if __name__ == '__main__':
-    u = Updater(kwargs=parse_args())
+    c = kwargs=parse_args()
+    u = Updater()
     try:
         u.start()
     except KeyboardInterrupt:
