@@ -70,6 +70,8 @@ class Updater(Thread):
                     if self.verbose:
                         print "updating", host
                     self.update(self.ip, host, self.domain, self.password)
+            if self.verbose:
+                print "sleeping for", self.sleep_time, "seconds"
             sleep(self.sleep_time)
 
     def start(self):
