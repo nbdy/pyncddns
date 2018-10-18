@@ -14,7 +14,7 @@ def parse_args():
     }
     i = 0
     while i < len(argv):
-        if argv[i] in ['-h', '--help']:
+        if argv[i] in ['--help']:
             print cfg.keys()
             exit()
         elif argv[i] in ["-i", "--ip"]:
