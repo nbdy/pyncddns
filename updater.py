@@ -7,7 +7,7 @@ from threading import Thread
 def parse_args():
     cfg = {
         "ip": None,
-        "host": None,
+        "hosts": [],
         "domain": None,
         "password": None,
         "sleep_time": 60*60
@@ -20,7 +20,7 @@ def parse_args():
         elif argv[i] in ["-i", "--ip"]:
             cfg["ip"] = argv[i + 1]
         elif argv[i] in ["-h", "--host"]:
-            cfg["host"] = argv[i + 1]
+            cfg["hosts"].appen(argv[i + 1])
         elif argv[i] in ["-d", "--domain"]:
             cfg["domain"] = argv[i + 1]
         elif argv[i] in ["-p", "--password"]:
@@ -35,20 +35,20 @@ class Updater(Thread):
     do_run = False
     password = None
     domain = None
-    host = None
+    hosts = None
     sleep_time = None
     ip = None
 
-    def __init__(self, domain, host, password, ip=None, sleep_time=60*60):
+    def __init__(self, domain, hosts, password, ip=None, sleep_time=60*60):
         Thread.__init__(self)
         self.do_run = True
         self.domain = domain
-        self.host = host
+        self.hosts = hosts
         self.password = password
         self.ip = ip
         self.sleep_time = sleep_time
 
-        for _ in [self.domain, self.host, self.password, self.sleep_time]:
+        for _ in [self.domain, self.hosts, self.password, self.sleep_time]:
             if _ is None:
                 self.do_run = False
 
@@ -57,7 +57,8 @@ class Updater(Thread):
             ip = self.get_ip()
             if self.ip is not ip:
                 self.ip = ip
-                self.update(self.ip, self.host, self.domain, self.password)
+                for host in self.hosts:
+                    self.update(self.ip, host, self.domain, self.password)
             sleep(self.sleep_time)
 
     def start(self):
@@ -86,7 +87,7 @@ class Updater(Thread):
 
 if __name__ == '__main__':
     c = parse_args()
-    u = Updater(c["domain"], c["host"], c["password"], c["ip"], c["sleep_time"])
+    u = Updater(c["domain"], c["hosts"], c["password"], c["ip"], c["sleep_time"])
     try:
         u.start()
     except KeyboardInterrupt:
