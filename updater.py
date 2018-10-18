@@ -48,7 +48,7 @@ class Updater(Thread):
         self.ip = ip
         self.sleep_time = sleep_time
 
-        for _ in [self.domain, self.host, self.password, self.ip, self.sleep_time]:
+        for _ in [self.domain, self.host, self.password, self.sleep_time]:
             if _ is None:
                 self.do_run = False
 
