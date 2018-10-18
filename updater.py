@@ -10,7 +10,7 @@ def parse_args():
         "host": None,
         "domain": None,
         "password": None,
-        "sleep_time": 24*60*60
+        "sleep_time": 60*60
     }
     i = 0
     while i < len(argv):
@@ -37,6 +37,7 @@ class Updater(Thread):
     domain = None
     host = None
     sleep_time = None
+    ip = None
 
     def __init__(self, **kwargs):
         Thread.__init__(self)
@@ -57,7 +58,10 @@ class Updater(Thread):
 
     def run(self):
         while self.do_run:
-            self.update(self.password, self.domain, self.host)
+            ip = self.get_ip()
+            if self.ip is not ip:
+                self.ip = ip
+                self.update(self.ip, self.host, self.domain, self.password)
             sleep(self.sleep_time)
 
     def start(self):
@@ -75,9 +79,9 @@ class Updater(Thread):
         return d
 
     @staticmethod
-    def update(password, domain, host):
+    def update(ip, host, domain, password):
         get('https://dynamicdns.park-your-domain.com/update', params={
-            "ip": Updater.get_ip(),
+            "ip": ip,
             "host": host,
             "domain": domain,
             "password": password
