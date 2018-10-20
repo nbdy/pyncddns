@@ -84,8 +84,8 @@ class Updater(Thread):
     def get_ip():
         d = get("http://checkip.dyndns.com/")
         d = d.content.split(':')[1]
-        d.replace(" ", "")
         d = d.split("<")[0]
+        d.replace(' ', '')
         return d
 
     @staticmethod
