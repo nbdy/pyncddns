@@ -33,10 +33,7 @@ def parse_args():
     }
     i = 0
     while i < len(argv):
-        if argv[i] in ['--help']:
-            print cfg.keys()
-            exit()
-        elif argv[i] in ["-i", "--ip"]:
+        if argv[i] in ["-i", "--ip"]:
             cfg["ip"] = argv[i + 1]
         elif argv[i] in ["-h", "--host"]:
             cfg["hosts"].append(argv[i + 1])
