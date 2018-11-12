@@ -49,7 +49,7 @@ def parse_args():
             _help()
         i += 1
 
-    for k, v in cfg.__dict__.iteritems():
+    for k, v in cfg.iteritems():
         if v is None:
             raise ConfigFieldNotFilled(k)
 
