@@ -1,7 +1,25 @@
 from requests import get
 from sys import argv
 from time import sleep
-from threading import Thread
+from threading import Thread  # could use Timer but imagine how much less code that would be
+
+
+class ConfigFieldNotFilled(Exception):
+    def __init__(self, what):
+        self.message = "please supply " + what + " or use --help"
+
+
+def _help():
+    print "usage: updater.py [arguments]"
+    print "[arguments]"
+    print "\t-i\t--ip"
+    print "\t-h\t--host"
+    print "\t-d\t--domain"
+    print "\t-p\t--password"
+    print "\t-s\t--sleep-time\tdefault: 3600"
+    print "\t-v\t--verbose"
+    print "\t--help"
+    exit()
 
 
 def parse_args():
@@ -30,7 +48,14 @@ def parse_args():
             cfg["sleep_time"] = int(argv[i + 1])
         elif argv[i] in ["-v", "--verbose"]:
             cfg["verbose"] = True
+        elif argv[i] in ["--help"]:
+            _help()
         i += 1
+
+    for k, v in cfg.__dict__.iteritems():
+        if v is None:
+            raise ConfigFieldNotFilled(k)
+
     return cfg
 
 
