@@ -3,12 +3,6 @@ from sys import argv
 from time import sleep
 from threading import Thread  # could use Timer but imagine how much less code that would be
 
-
-class ConfigFieldNotFilled(Exception):
-    def __init__(self, what):
-        self.message = "please supply " + what + " or use --help"
-
-
 def _help():
     print "usage: updater.py [arguments]"
     print "[arguments]"
@@ -51,7 +45,7 @@ def parse_args():
 
     for k, v in cfg.iteritems():
         if v is None:
-            raise ConfigFieldNotFilled(k)
+            print k, "in config has not been filled"
 
     return cfg
 
