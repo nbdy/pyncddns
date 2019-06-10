@@ -90,9 +90,9 @@ class Updater(Thread):
     @staticmethod
     def get_ip():
         d = get("http://checkip.dyndns.com/")
-        d = d.content.split(b":")[1]
-        d = d.split(b"<")[0]
-        d.replace(' ', '')
+        d = d.content.split(b':')[1]
+        d = d.split(b'<')[0]
+        d.replace(b' ', b'')
         return d
 
     @staticmethod
