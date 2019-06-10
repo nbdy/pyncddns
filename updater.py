@@ -46,9 +46,15 @@ class Configuration(object):
                 Configuration.help()
             i += 1
 
-        for k, v in cfg.__dict__.iteritems():
-            if v is None:
-                print(k, "in config has not been filled")
+        if len(cfg.hosts) == 0:
+            print("host list is empty")
+            exit()
+        if cfg.domain is None:
+            print("what domain should i use?")
+            exit()
+        if cfg.password is None:
+            print("not sure if you can log in without a password")
+            exit()
 
         return cfg
 
