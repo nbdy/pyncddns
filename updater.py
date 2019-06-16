@@ -97,12 +97,15 @@ class Updater(Thread):
 
     @staticmethod
     def update(ip, host, domain, password):
-        get('https://dynamicdns.park-your-domain.com/update', params={
+        r = get('https://dynamicdns.park-your-domain.com/update', params={
             "ip": ip,
             "host": host,
             "domain": domain,
             "password": password
         })
+        if "Passwords do not match" in r.text:
+            print("password incorrect")
+            exit()
 
 
 if __name__ == '__main__':
