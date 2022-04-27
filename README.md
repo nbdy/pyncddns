@@ -1,5 +1,7 @@
 ### pyncddns
+
 arguments:
+
 ```shell
 python updater.py --help
 usage: updater.py [arguments]
@@ -12,7 +14,9 @@ usage: updater.py [arguments]
         -v      --verbose
         --help
 ```
+
 example usage:
+
 ```shell
 python updater.py -h sync -h mqtt -d eberlein.io -p yepDisMeR34lP4$$
 ```
